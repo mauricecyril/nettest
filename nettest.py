@@ -1,8 +1,11 @@
 #!/usr/bin/python
+#
 # you need to install dependent programs and 
-# utilities such as speedtest-cli, a command line 
-# interface program that tests your bandwidth speeds 
+# utilities such as speedtest-cli, https://github.com/sivel/speedtest-cli
+# a command line interface program that tests your bandwidth speeds 
 # via speedtest.net 
+
+
 import os
 import sys 
 import csv 
@@ -13,7 +16,7 @@ import time
 def test():
 
         #run speedtest-cli
-        print('Running test')
+        print('Running Test')
         a = os.popen("speedtest-cli --simple").read()
         #b = str(a)
         #print(b)
@@ -28,7 +31,6 @@ def test():
         date = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S') 
 
         #if speedtest could not connect set the speeds to 0 
-
         if "Cannot" in a:
                 print("Failed Connection") 
                 #print(a) 
@@ -43,6 +45,21 @@ def test():
                 writer.writerow((date,ts*1000,p,d,u)) 
                 out_file.close()
 
+        #if speedtest connection reset by peer, set the speeds to 0 
+        elif "Errno 104" in a:
+                print("Connection Reset by Peer")
+                p = 0
+                d = 0
+                u = 0
+                print(date, p, d, u)
+
+                #save the data to file for local network plotting 
+                out_file = open('/sdcard/python3/data.csv', 'a') 
+                writer = csv.writer(out_file) 
+                writer.writerow((date,ts*1000,p,d,u)) 
+                out_file.close()
+                
+        #if speedtest Times out set the speeds to 0 
         elif "Errno 110" in a:
                 print("Connection Timed Out")
                 p = 0
@@ -50,6 +67,13 @@ def test():
                 u = 0
                 print(date, p, d, u)
 
+                #save the data to file for local network plotting 
+                out_file = open('/sdcard/python3/data.csv', 'a') 
+                writer = csv.writer(out_file) 
+                writer.writerow((date,ts*1000,p,d,u)) 
+                out_file.close()
+
+                
         else:
                 print("Successful Connection") 
                 p = lines[0][6:11] 
@@ -57,9 +81,7 @@ def test():
                 u = lines[2][8:12] 
                 print(date,p, d, u) 
 
-                #save the data to file for local 
-                #network plotting 
-
+                #save the data to file for local network plotting 
                 out_file = open('/sdcard/python3/data.csv', 'a') 
                 writer = csv.writer(out_file) 
                 writer.writerow((date,ts*1000,p,d,u))
@@ -70,4 +92,4 @@ def test():
 
 if __name__ == '__main__':
         test()
-        print('completed')
+        print('Script Completed')
