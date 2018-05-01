@@ -13,6 +13,9 @@ import datetime
 import time 
 import threading
 
+global filelocation
+filelocation = str("'/sdcard/python3/data.csv'")
+
 def speedtest():
 
         #run speedtest-cli
@@ -36,7 +39,7 @@ def speedtest():
                 print(msg, date, p, d, u) 
 
                 #save the data to file for local network plotting 
-                out_file = open('/sdcard/python3/data.csv', 'a') 
+                out_file = open(filelocation, 'a') 
                 writer = csv.writer(out_file) 
                 writer.writerow((date,msg,p,d,u)) 
                 out_file.close()
@@ -50,7 +53,7 @@ def speedtest():
                 print(msg, date, p, d, u)
 
                 #save the data to file for local network plotting 
-                out_file = open('/sdcard/python3/data.csv', 'a') 
+                out_file = open(filelocation, 'a') 
                 writer = csv.writer(out_file) 
                 writer.writerow((date,msg,p,d,u)) 
                 out_file.close()
@@ -64,7 +67,7 @@ def speedtest():
                 print(msg, date, p, d, u)
 
                 #save the data to file for local network plotting 
-                out_file = open('/sdcard/python3/data.csv', 'a') 
+                out_file = open(filelocation, 'a') 
                 writer = csv.writer(out_file) 
                 writer.writerow((date,msg,p,d,u)) 
                 out_file.close()
@@ -78,7 +81,7 @@ def speedtest():
                 print(msg, date, p, d, u) 
 
                 #save the data to file for local network plotting 
-                out_file = open('/sdcard/python3/data.csv', 'a') 
+                out_file = open(filelocation, 'a') 
                 writer = csv.writer(out_file) 
                 writer.writerow((date,msg,p,d,u))
                 out_file.close()
