@@ -13,8 +13,10 @@ import datetime
 import time 
 import threading
 
+# Define global variable for file location where data will be stored
 global filelocation
-filelocation = str("'/sdcard/python3/data.csv'")
+# Edit the path between ' ' and save the extension as csv
+filelocation = str('/sdcard/python3/data.csv')
 
 def speedtest():
 
