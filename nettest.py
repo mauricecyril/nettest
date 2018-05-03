@@ -74,7 +74,21 @@ def speedtest():
                 writer.writerow((date,msg,p,d,u)) 
                 out_file.close()
 
+        #if speedtest cannot determine Name or Service set the speeds to 0 
+        elif "Errno -2" in a:
+                msg = str("Name or Service Not Known")
+                p = 0
+                d = 0
+                u = 0
+                print(msg, date, p, d, u)
+
+                #save the data to file for local network plotting 
+                out_file = open(filelocation, 'a') 
+                writer = csv.writer(out_file) 
+                writer.writerow((date,msg,p,d,u)) 
+                out_file.close()
                 
+        #if speedtest successfully pings set connection as successful         
         else:
                 msg = str("Successful Connection") 
                 p = lines[0][6:11] 
@@ -92,5 +106,8 @@ def speedtest():
 
 
 if __name__ == '__main__':
-        speedtest()
-        print("Script Completed and Results Logged")
+        # Run the script in an infinte loop [press Ctrl + C to end]
+        while True:
+            speedtest()
+            print("Script Completed and Results Logged")
+            time.sleep(120)
